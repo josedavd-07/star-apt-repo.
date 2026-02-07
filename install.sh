@@ -1,4 +1,5 @@
 #!/bin/bash
+# Updated: 2026-02-06-2030 - Force Refresh
 
 # Configuration
 DEB_URL="https://github.com/josedavd-07/Star/releases/latest/download/star-language_1.0.0_amd64.deb"
