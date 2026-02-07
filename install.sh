@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Configuration
-REPO_URL="https://josedavd-07.github.io/star-apt-repo"
-GPG_KEY_URL="$REPO_URL/key.gpg"
+DEB_URL="https://github.com/josedavd-07/Star/releases/latest/download/star-language_1.0.0_amd64.deb"
+TEMP_DEB="/tmp/star-language.deb"
 
-echo "🌟 Installing Star Language Repository..."
+echo "🌟 Installing Star Language..."
 
 # Check for root
 if [ "$EUID" -ne 0 ]; then
@@ -12,15 +12,21 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# 1. Download and add GPG key
-echo "📥 Downloading GPG key..."
-wget -qO - "$GPG_KEY_URL" | gpg --dearmor -o /usr/share/keyrings/star-language-archive-keyring.gpg
+# Download .deb package
+echo "📥 Downloading Star Language package..."
+wget -q --show-progress -O "$TEMP_DEB" "$DEB_URL"
 
-# 2. Add repository to sources
-echo "📝 Adding repository to sources..."
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/star-language-archive-keyring.gpg] $REPO_URL stable main" | tee /etc/apt/sources.list.d/star-language.list > /dev/null
+if [ $? -ne 0 ]; then
+    echo "❌ Failed to download package"
+    exit 1
+fi
 
-# 3. Update and inform
-apt update
-echo "✅ Star Language repository added successfully!"
-echo "🚀 Run 'sudo apt install star-language' to get started."
+# Install package
+echo "🚀 Installing..."
+apt install -y "$TEMP_DEB"
+
+# Cleanup
+rm -f "$TEMP_DEB"
+
+echo "✅ Star Language installed successfully!"
+echo "🌟 Run 'star --version' to verify installation."
