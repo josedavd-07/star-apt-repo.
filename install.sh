@@ -1,8 +1,8 @@
 #!/bin/bash
-# Updated: 2026-02-06-2030 - Force Refresh
+# Updated: 2026-02-06-2050 - v1.0.1 Release
 
 # Configuration
-DEB_URL="https://github.com/josedavd-07/Star/releases/latest/download/star-language_1.0.0_amd64.deb"
+DEB_URL="https://github.com/josedavd-07/Star/releases/download/v1.0.1/star-language_1.0.0_amd64.deb"
 TEMP_DEB="/tmp/star-language.deb"
 
 echo "🌟 Installing Star Language..."
